@@ -2,17 +2,10 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 class TimeSync
-{
-    private string statusServer = "";
-
-    public void SetStatusServer(statusServer)
+{    
+    private static void Sync()
     {
-        this.statusServer = statusServer;
-    }
-    
-    public static void TimeSync()
-    {
-        ProcessStartInfo = new ProcessStartInfo
+        ProcessStartInfo processInfo = new ProcessStartInfo
         {
             FileName = "cmd.exe",
             Arguments = $"/C w32tm /resync",
@@ -23,7 +16,7 @@ class TimeSync
             WindowStyle = ProcessWindowStyle.Maximized
         };
 
-        using (Process process = new Process)
+        using (Process process = new Process())
         {
             process.StartInfo = processInfo;
             process.Start();
@@ -31,16 +24,17 @@ class TimeSync
             process.WaitForExit();
             process.Close();
             Console.WriteLine(output);
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(10000);
         }
-        //declarar classe de registro de log
-
-        //declarar função para minimizar o cmd
+        //registrar log na main
+        // não é mais necessário declarar intervalos para o funcionamneto do programa, pois a condição será especificada na main
     }
 
     private static bool CheckNtpServer()
     {
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
         bool specifiedServer;
+#pragma warning restore CS0219 // Variable is assigned but its value is never used
         while (true)
         {
             ProcessStartInfo processInfo = new ProcessStartInfo
